@@ -3,7 +3,7 @@
  * @Copyright
  * @package     AIB - Author Info Box
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     3.1.1 - 2016-01-25
+ * @version     3.1.2 - 2016-02-13
  * @link        https://joomla-extensions.kubik-rubik.de/aib-author-info-box
  *
  * @license     GNU/GPL
@@ -849,7 +849,7 @@ class PlgContentAuthorInfobox extends JPlugin
 	public function onContentBeforeDisplay($context, &$row, &$params, $page = 0)
 	{
 		// Do not execute plugin with this trigger in article view
-		if($this->article_view == false)
+		if($this->article_view == false AND strpos($context, 'com_content') !== false)
 		{
 			if($this->params->get('position') == 0)
 			{
@@ -872,7 +872,7 @@ class PlgContentAuthorInfobox extends JPlugin
 	public function onContentAfterDisplay($context, &$row, &$params, $page = 0)
 	{
 		// Do not execute plugin with this trigger in article view
-		if($this->article_view == false)
+		if($this->article_view == false AND strpos($context, 'com_content') !== false)
 		{
 			if($this->params->get('position') == 1)
 			{

@@ -73,10 +73,10 @@ class JFormFieldRadioCache extends JFormField
 		$html[] = '</fieldset>';
 		
 		if($this->value) {
-			$html[] = '<span data-content="' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_ENABLED_DESC') . '" class="label label-success hasPopover">' .
+			$html[] = '<span data-content="' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_ENABLED_DESC') . '" class="label label-success hasPopover">' .
 					  '<span class="glyphicon glyphicon-ok-sign"></span>' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_ENABLED') . '</span>';
 		} else {
-			$html[] = '<span data-content="' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_DISABLED_DESC') . '" class="label label-danger hasPopover">' .
+			$html[] = '<span data-content="' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_DISABLED_DESC') . '" class="label label-danger hasPopover">' .
 					  '<span class="glyphicon glyphicon-warning-sign"></span>' . JText::sprintf('COM_JMAP_JOOMLA_' . $translationCacheType . 'CACHE_DISABLED') . '</span>';
 		}
 		

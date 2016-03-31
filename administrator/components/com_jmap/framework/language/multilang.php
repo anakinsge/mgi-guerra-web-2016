@@ -95,37 +95,37 @@ class JMapLanguageMultilang extends JLanguage {
 	 * 
 	 */
 	public static function loadLanguageID($languageTag) {
-		// Determine status of language filter plug-in.
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		
-		$query->select('lang_id');
-		$query->from($db->quoteName('#__languages'));
-		$query->where($db->quoteName('lang_code') . ' = ' . $db->quote($languageTag));
-		$db->setQuery($query);
-		
-		$langID = $db->loadResult();
+		// Determine status of language filter plug-in.
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		
+		$query->select('lang_id');
+		$query->from($db->quoteName('#__languages'));
+		$query->where($db->quoteName('lang_code') . ' = ' . $db->quote($languageTag));
+		$db->setQuery($query);
+		
+		$langID = $db->loadResult();
 		return $langID;
 	}
 	
-	/**
-	 * Override Language instantiator
-	 *
-	 * @access	public
-	 * @return	JLanguage  The Language object.
-	 */
-	public static function getInstance($lang = null, $debug = false) {
-		$conf	= JFactory::getConfig();
-	
-		if(is_null($lang)) {
-			$locale = $conf->get('config.language');
-		} else {
-			$locale = $lang;
-		}
-	
-		$langInstance = new JMapLanguageMultilang($locale);
-		$langInstance->setDebug($conf->get('config.debug_lang'));
-	
-		return $langInstance;
+	/**
+	 * Override Language instantiator
+	 *
+	 * @access	public
+	 * @return	JLanguage  The Language object.
+	 */
+	public static function getInstance($lang = null, $debug = false) {
+		$conf	= JFactory::getConfig();
+	
+		if(is_null($lang)) {
+			$locale = $conf->get('language');
+		} else {
+			$locale = $lang;
+		}
+	
+		$langInstance = new JMapLanguageMultilang($locale);
+		$langInstance->setDebug($conf->get('debug_lang'));
+	
+		return $langInstance;
 	}
 }

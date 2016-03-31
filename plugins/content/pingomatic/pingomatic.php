@@ -181,19 +181,27 @@ class plgContentPingomatic extends JPlugin {
 			
 			// Check if multilanguage is enabled
 			if (JMapLanguageMultilang::isEnabled ()) {
+				$defaultLanguage = JComponentHelper::getParams('com_languages')->get('site');
 				if ($language != '*') {
 					// New language manager instance
 					$languageManager = JMapLanguageMultilang::getInstance ( $language );
 				} else {
 					// Get the default language tag
 					// New language manager instance
-					$languageManager = JMapLanguageMultilang::getInstance ();
+					$languageManager = JMapLanguageMultilang::getInstance ( $defaultLanguage );
 				}
 				
 				// Extract the language tag
-				$localeTag = $languageManager->getLocale ();
-				$sefTag = $localeTag [4];
-				$articleMenuRouted = str_replace ( '/administrator', '/' . $sefTag, $articleMenuRouted );
+				$selectedLanguage = $languageManager->getTag();
+				$languageFilterPlugin = JPluginHelper::getPlugin('system', 'languagefilter');
+				$languageFilterPluginParams = new JRegistry($languageFilterPlugin->params);
+				if($defaultLanguage == $selectedLanguage && $languageFilterPluginParams->get('remove_default_prefix', 0)) {
+					$articleMenuRouted = str_replace ( '/administrator', '', $articleMenuRouted );
+				} else {
+					$localeTag = $languageManager->getLocale ();
+					$sefTag = $localeTag [4];
+					$articleMenuRouted = str_replace ( '/administrator', '/' . $sefTag, $articleMenuRouted );
+				}
 			} else {
 				$articleMenuRouted = str_replace ( '/administrator', '', $articleMenuRouted );
 			}

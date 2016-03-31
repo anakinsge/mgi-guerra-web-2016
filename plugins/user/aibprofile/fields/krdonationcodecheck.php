@@ -3,7 +3,7 @@
  * @Copyright
  * @package     Field - Donation Code Check
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     Joomla! 3 - 3.1.0 - 2015-07-30
+ * @version     Joomla! 3 - 3.1.1 - 2015-07-31
  * @link        https://joomla-extensions.kubik-rubik.de/
  *
  * @license     GNU/GPL
@@ -55,7 +55,7 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 		{
 			$field_value = '';
 
-			if($this->id == 'jform_params_donation')
+			if($this->id == 'jform_params_donation' OR $this->id == 'jform_donation')
 			{
 				$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
 				$this->setHeadDataSession($session);
@@ -70,7 +70,6 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 			return $field_value_session;
 		}
 
-		// Clear session variables
 		$session->clear('field_value', 'krdonationcodecheck');
 		$session->clear('field_value_head', 'krdonationcodecheck');
 		$session->clear('donation_code', 'krdonationcodecheck');
@@ -117,7 +116,7 @@ class JFormFieldKRDonationCodeCheck extends JFormField
 
 		$field_value = '';
 
-		if($this->id == 'jform_params_donation')
+		if($this->id == 'jform_params_donation' OR $this->id == 'jform_donation')
 		{
 			$field_value .= '<div class="'.$this->randomClassName($session, 'success').'">'.JTEXT::_('KR_DONATION_CODE_CHECK_SUCCESS').'</div>';
 		}

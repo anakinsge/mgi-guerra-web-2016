@@ -10,14 +10,14 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-/**
- * Generic static helper class
- *
- * @package JMAP::FRAMEWORK::administrator::components::com_jmap
- * @subpackage framework
- * @subpackage helpers
- * @since 3.5
- */
+/**
+ * Generic static helper class
+ *
+ * @package JMAP::FRAMEWORK::administrator::components::com_jmap
+ * @subpackage framework
+ * @subpackage helpers
+ * @since 3.5
+ */
 class JMapHelpersAssociations {
 	/**
 	 * Get the items associations
@@ -42,16 +42,16 @@ class JMapHelpersAssociations {
 		->where('m.type=' . $db->quote('component'));
 		$db->setQuery($query);
 	
-		try {
-			$menuitems = $db->loadObjectList ( 'sef' );
-		} catch ( RuntimeException $e ) {
-			return $associations;
-		}
-		
-		foreach ( $menuitems as $tag => $item ) {
-			$associations [$tag] = $item;
-		}
-		
+		try {
+			$menuitems = $db->loadObjectList ( 'sef' );
+		} catch ( RuntimeException $e ) {
+			return $associations;
+		}
+		
+		foreach ( $menuitems as $tag => $item ) {
+			$associations [$tag] = $item;
+		}
+		
 		return $associations;
 	}
 	
@@ -80,16 +80,16 @@ class JMapHelpersAssociations {
 		->join('INNER', $db->quoteName('#__associations', 'a') . ' ON a.id = c.' . $db->quoteName($pk) . ' AND a.context=' . $db->quote($context))
 		->join('INNER', $db->quoteName('#__associations', 'a2') . ' ON a.key = a2.key')
 		->join('INNER', $db->quoteName($tablename, 'c2') . ' ON a2.id = c2.' . $db->quoteName($pk))
-		->join('INNER', $db->quoteName('#__languages', 'lg') . ' ON c2.language = lg.' . $db->quoteName('lang_code'));
-		
-		// Use alias field ?
-		if (! empty ( $aliasField )) {
-			$query->select ( $query->concatenate ( array (
-					$db->quoteName ( 'c2.' . $pk ),
-					$db->quoteName ( 'c2.' . $aliasField ) 
-			), ':' ) . ' AS ' . $db->quoteName ( $pk ) );
-		} else {
-			$query->select ( $db->quoteName ( 'c2.' . $pk ) );
+		->join('INNER', $db->quoteName('#__languages', 'lg') . ' ON c2.language = lg.' . $db->quoteName('lang_code'));
+		
+		// Use alias field ?
+		if (! empty ( $aliasField )) {
+			$query->select ( $query->concatenate ( array (
+					$db->quoteName ( 'c2.' . $pk ),
+					$db->quoteName ( 'c2.' . $aliasField ) 
+			), ':' ) . ' AS ' . $db->quoteName ( $pk ) );
+		} else {
+			$query->select ( $db->quoteName ( 'c2.' . $pk ) );
 		}
 	
 		// Use catid field ?

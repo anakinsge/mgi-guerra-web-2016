@@ -9,12 +9,12 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-// Manage partial language translations
-$jLang = JFactory::getLanguage();
-$jLang->load('com_jmap', JPATH_BASE . '/components/com_jmap', 'en-GB', true, true);
-if($jLang->getTag() != 'en-GB') {
-	$jLang->load('com_jmap', JPATH_BASE, null, true, false);
-	$jLang->load('com_jmap', JPATH_BASE . '/components/com_jmap', null, true, false);
+// Manage partial language translations
+$jLang = JFactory::getLanguage();
+$jLang->load('com_jmap', JPATH_BASE . '/components/com_jmap', 'en-GB', true, true);
+if($jLang->getTag() != 'en-GB') {
+	$jLang->load('com_jmap', JPATH_BASE, null, true, false);
+	$jLang->load('com_jmap', JPATH_BASE . '/components/com_jmap', null, true, false);
 }
 $doc = JFactory::getDocument();
 $currentVersion = strval(simplexml_load_file(JPATH_BASE . '/components/com_jmap/jmap.xml')->version);

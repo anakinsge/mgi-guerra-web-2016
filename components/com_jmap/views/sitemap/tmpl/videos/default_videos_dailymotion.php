@@ -12,9 +12,9 @@
 defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
 $this->videoTitle = $this->apiJsonResponse->title;
-$this->loadTemplate('videos_filtering');
-// Only valid videos to insert in the sitemap
-if($this->validVideo):
+$this->loadTemplate('videos_filtering');
+// Only valid videos to insert in the sitemap
+if($this->validVideo):
 ?>
 <video:video>
 <video:thumbnail_loc><?php echo htmlspecialchars($this->apiJsonResponse->thumbnail_360_url, ENT_COMPAT, 'UTF-8');?></video:thumbnail_loc>

@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
  * @package JMAP::modules::mod_jmap
  * @since 3.0
  */
-defined('_JEXEC') or die;
+jimport('joomla.filesystem.file');
 
 // Include the syndicate functions only once
 if($params->get('height_auto', 1)) {
@@ -32,17 +32,23 @@ $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 
 // Check for multilanguage
 $app = JFactory::getApplication();
-$currentSefLanguage = null;
+$currentSefLanguage = null;
 if ($app->isSite()) {
 	$multilangEnabled = $app->getLanguageFilter();
 	$currentSefLanguage = $multilangEnabled ?  JFactory::getLanguage()->getLocale() : null;
 	if(is_array($currentSefLanguage)) {
-		$partialSef = explode('_', $currentSefLanguage[0]);
+		$partialSef = explode('_', $currentSefLanguage[2]);
 		$sefLang = array_shift($partialSef);
 		$currentSefLanguage = $sefLang . '/';
 	}
 }
 
-$targetIFrameUrl =  JUri::base() . $currentSefLanguage . '?option=com_jmap&amp;view=sitemap&amp;tmpl=component&amp;jmap_module=' . $module->id . $dataset;
+// Try to check for an active htaccess file
+$index = null;
+if(!JFile::exists(JPATH_ROOT . '/.htaccess')) {
+	$index = 'index.php/';
+}
+
+$targetIFrameUrl =  JUri::base() . $index . $currentSefLanguage . '?option=com_jmap&amp;view=sitemap&amp;tmpl=component&amp;jmap_module=' . $module->id . $dataset;
 
 require JModuleHelper::getLayoutPath('mod_jmap', $params->get('layout', 'default'));

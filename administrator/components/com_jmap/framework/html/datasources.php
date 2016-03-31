@@ -34,36 +34,36 @@ class JFormFieldDataSources extends JFormField {
 	 * @since	1.6
 	 */
 	protected function getInput() {
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$dataSources = array ();
 		$dataSourcesOptions = array();
-		
-		// get a list of the menu items
-		$query = "SELECT ds.id, ds.name, ds.type" .
-				 "\n FROM #__jmap AS ds" .
-				 "\n WHERE ds.published = 1" .
-				 "\n ORDER BY ds.type, ds.ordering";
-		$db->setQuery ( $query );
-		$dataSources = $db->loadObjectList ();
 		
-		$lastDSType = null;
-		$tmpDSType = null;
-		foreach ( $dataSources as $dataSource ) {
-			if ($dataSource->type != $lastDSType) {
-				if ($tmpDSType) {
-					$dataSourcesOptions [] = JHTML::_ ( 'select.option', '</OPTGROUP>' );
-				}
-				$dataSourcesOptions [] = JHTML::_ ( 'select.option', '<OPTGROUP>', strtoupper($dataSource->type) );
-				$lastDSType = $dataSource->type;
-				$tmpDSType = $dataSource->type;
-			}
-				
-			$dataSourcesOptions [] = JHTML::_ ( 'select.option', $dataSource->id, $dataSource->name );
-		}
-		if ($lastDSType !== null) {
-			$dataSourcesOptions [] = JHTML::_ ( 'select.option', '</OPTGROUP>' );
-		}
-		
+		// get a list of the menu items
+		$query = "SELECT dsource.id, dsource.name, dsource.type" .
+				 "\n FROM #__jmap AS dsource" .
+				 "\n WHERE dsource.published = 1" .
+				 "\n ORDER BY dsource.type, dsource.ordering";
+		$db->setQuery ( $query );
+		$dataSources = $db->loadObjectList ();
+		
+		$lastDSType = null;
+		$tmpDSType = null;
+		foreach ( $dataSources as $dataSource ) {
+			if ($dataSource->type != $lastDSType) {
+				if ($tmpDSType) {
+					$dataSourcesOptions [] = JHTML::_ ( 'select.option', '</OPTGROUP>' );
+				}
+				$dataSourcesOptions [] = JHTML::_ ( 'select.option', '<OPTGROUP>', strtoupper($dataSource->type) );
+				$lastDSType = $dataSource->type;
+				$tmpDSType = $dataSource->type;
+			}
+				
+			$dataSourcesOptions [] = JHTML::_ ( 'select.option', $dataSource->id, $dataSource->name );
+		}
+		if ($lastDSType !== null) {
+			$dataSourcesOptions [] = JHTML::_ ( 'select.option', '</OPTGROUP>' );
+		}
+		
 		return JHtml::_('select.genericlist', $dataSourcesOptions, $this->name. '[]', 'multiple="multiple" size="20" style="width: 250px"', 'value', 'text', $this->value);
 	} 
 }

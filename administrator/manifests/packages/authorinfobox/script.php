@@ -3,7 +3,7 @@
  * @Copyright
  * @package     AIB - Author Info Box
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     3.1.0 - 2015-07-30
+ * @version     3.1.2 - 2016-02-13
  * @link        https://joomla-extensions.kubik-rubik.de/aib-author-info-box
  *
  * @license     GNU/GPL
@@ -47,11 +47,11 @@ class Pkg_AuthorInfoBoxInstallerScript
     {
         $db = JFactory::getDbo();
 
-        // Enable the content pluign
+        // Enable the content plugin
         $db->setQuery("UPDATE ".$db->quoteName('#__extensions')." SET ".$db->quoteName('enabled')." = 1 WHERE ".$db->quoteName('element')." = 'authorinfobox' AND ".$db->quoteName('type')." = 'plugin'");
         $db->execute();
 
-        // Enable the user profile pluign
+        // Enable the user profile plugin
         $db->setQuery("UPDATE ".$db->quoteName('#__extensions')." SET ".$db->quoteName('enabled')." = 1 WHERE ".$db->quoteName('element')." = 'aibprofile' AND ".$db->quoteName('type')." = 'plugin'");
         $db->execute();
 

@@ -10,41 +10,41 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-/**
- * HTTP connector client object interface
- *
- * @package JMAP::FRAMEWORK::administrator::components::com_jmap
- * @subpackage framework
- * @subpackage http
- * @since 1.0
- */
-interface IJMapHttp {
-	/**
-	 * Method to send the GET command to the server.
-	 *
-	 * @param   string  $url      Path to the resource.
-	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
-	 *
-	 * @return  JMapHttpResponse
-	 *
-	 * @since 2.0
-	 */
+/**
+ * HTTP connector client object interface
+ *
+ * @package JMAP::FRAMEWORK::administrator::components::com_jmap
+ * @subpackage framework
+ * @subpackage http
+ * @since 1.0
+ */
+interface IJMapHttp {
+	/**
+	 * Method to send the GET command to the server.
+	 *
+	 * @param   string  $url      Path to the resource.
+	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
+	 *
+	 * @return  JMapHttpResponse
+	 *
+	 * @since 2.0
+	 */
 	public function get($url, array $headers = null);
 	
-	/**
-	 * Method to send the POST command to the server.
-	 *
-	 * @param   string  $url      Path to the resource.
-	 * @param   mixed   $data     Either an associative array or a string to be sent with the request.
+	/**
+	 * Method to send the POST command to the server.
+	 *
+	 * @param   string  $url      Path to the resource.
+	 * @param   mixed   $data     Either an associative array or a string to be sent with the request.
 	 * @param   array   $headers  An array of name-value pairs to include in the header of the request.
 	 * @param	int 	$timeout
-	 * @param	string 	$useragent
-	 *
-	 * @return  JMapHttpResponse
-	 *
-	 * @since 1.0
-	 */
-	public function post($url, $data, array $headers = null, $timeout = null, $userAgent = null);
+	 * @param	string 	$useragent
+	 *
+	 * @return  JMapHttpResponse
+	 *
+	 * @since 1.0
+	 */
+	public function post($url, $data, array $headers = null, $timeout = null, $userAgent = null);
 }
 
 /**
@@ -82,11 +82,11 @@ class JMapHttp implements IJMapHttp {
 	 */
 	protected $cParams;
 	
-	/**
-	 * Application object
-	 * @var    Object&
-	 * @access protected
-	 */
+	/**
+	 * Application object
+	 * @var    Object&
+	 * @access protected
+	 */
 	protected $app;
 
 	/**

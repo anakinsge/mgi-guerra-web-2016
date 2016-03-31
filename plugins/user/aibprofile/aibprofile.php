@@ -3,7 +3,7 @@
  * @Copyright
  * @package     AIB - Author Info Box
  * @author      Viktor Vogel <admin@kubik-rubik.de>
- * @version     3.1.0 - 2015-07-30
+ * @version     3.1.2 - 2016-02-13
  * @link        https://joomla-extensions.kubik-rubik.de/aib-author-info-box
  *
  * @license     GNU/GPL
@@ -22,201 +22,192 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
+use Joomla\Utilities\ArrayHelper;
+
 class PlgUserAibProfile extends JPlugin
 {
-    protected $db;
+	protected $db;
 
-    public function __construct(& $subject, $config)
-    {
-        parent::__construct($subject, $config);
-        $this->loadLanguage();
+	public function __construct(& $subject, $config)
+	{
+		parent::__construct($subject, $config);
+		$this->loadLanguage();
 
-        $this->db = JFactory::getDbo();
-    }
+		$this->db = JFactory::getDbo();
+	}
 
-    /**
-     * Gets the data of the AIB profile plugin for valid form requests
-     *
-     * @param string  $context
-     * @param JObject $data
-     *
-     * @return boolean
-     */
-    function onContentPrepareData($context, $data)
-    {
-        if(!in_array($context, array('com_users.user', 'com_admin.profile', 'com_users.profile')))
-        {
-            return true;
-        }
+	/**
+	 * Gets the data of the AIB profile plugin for valid form requests
+	 *
+	 * @param string  $context
+	 * @param JObject $data
+	 *
+	 * @return boolean
+	 */
+	function onContentPrepareData($context, $data)
+	{
+		if(!in_array($context, array('com_users.user', 'com_admin.profile', 'com_users.profile')))
+		{
+			return true;
+		}
 
-        if(is_object($data))
-        {
-            if(empty($data->aibprofile) AND $data->id > 0)
-            {
-                $query = $this->db->getQuery(true);
-                $query->select($this->db->quoteName(array('profile_key', 'profile_value')));
-                $query->from($this->db->quoteName('#__user_aibprofiles'));
-                $query->where(array($this->db->quoteName('user_id').' = '.(int)$data->id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
-                $query->order('ordering ASC');
-                $this->db->setQuery($query);
+		if(is_object($data))
+		{
+			if(empty($data->aibprofile) AND $data->id > 0)
+			{
+				$query = $this->db->getQuery(true);
+				$query->select($this->db->quoteName(array('profile_key', 'profile_value')));
+				$query->from($this->db->quoteName('#__user_aibprofiles'));
+				$query->where(array($this->db->quoteName('user_id').' = '.(int)$data->id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
+				$query->order('ordering ASC');
+				$this->db->setQuery($query);
 
-                $result = $this->db->loadRowList();
+				try
+				{
+					$result = $this->db->loadRowList();
+				}
+				catch(RuntimeException $e)
+				{
+					$this->_subject->setError($e->getMessage());
 
-                // TODO Remove deprecated usage of error functions, use exception handling instead
-                if($this->db->getErrorNum())
-                {
-                    $this->_subject->setError($this->db->getErrorMsg());
+					return false;
+				}
 
-                    return false;
-                }
+				$data->aibprofile = array();
 
-                $data->aibprofile = array();
+				foreach($result as $value)
+				{
+					$value_clean = str_replace('aibprofile.', '', $value[0]);
+					$data->aibprofile[$value_clean] = json_decode($value[1], true);
 
-                foreach($result as $value)
-                {
-                    $value_clean = str_replace('aibprofile.', '', $value[0]);
-                    $data->aibprofile[$value_clean] = json_decode($value[1], true);
+					// If JSON decode was not executed correctly, set the not decoded value
+					if($data->aibprofile[$value_clean] === null)
+					{
+						$data->aibprofile[$value_clean] = $value[1];
+					}
+				}
+			}
+		}
 
-                    // If JSON decode was not executed correctly, set the not decoded value
-                    if($data->aibprofile[$value_clean] === null)
-                    {
-                        $data->aibprofile[$value_clean] = $value[1];
-                    }
-                }
-            }
-        }
+		return true;
+	}
 
-        return true;
-    }
+	/**
+	 * Loads the input fields in valid forms (due to security reason only backend forms are selected)
+	 *
+	 * @param JForm   $form
+	 * @param JObject $data
+	 *
+	 * @return boolean
+	 */
+	function onContentPrepareForm($form, $data)
+	{
+		if(!($form instanceof JForm))
+		{
+			$this->_subject->setError('JERROR_NOT_A_FORM');
 
-    /**
-     * Loads the input fields in valid forms (due to security reason only backend forms are selected)
-     *
-     * @param JForm   $form
-     * @param JObject $data
-     *
-     * @return boolean
-     */
-    function onContentPrepareForm($form, $data)
-    {
-        if(!($form instanceof JForm))
-        {
-            $this->_subject->setError('JERROR_NOT_A_FORM');
+			return false;
+		}
 
-            return false;
-        }
+		if(!in_array($form->getName(), array('com_users.user', 'com_admin.profile')))
+		{
+			return true;
+		}
 
-        if(!in_array($form->getName(), array('com_users.user', 'com_admin.profile')))
-        {
-            return true;
-        }
+		JForm::addFormPath(dirname(__FILE__).'/profiles');
+		$form->loadFile('aibprofile', false);
 
-        JForm::addFormPath(dirname(__FILE__).'/profiles');
-        $form->loadFile('aibprofile', false);
+		return true;
+	}
 
-        return true;
-    }
+	/**
+	 * Saves the input data of the AIB profile plugin
+	 *
+	 * @param array   $data
+	 * @param boolean $isNew
+	 * @param boolean $result
+	 * @param boolean $error
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
+	function onUserAfterSave($data, $isNew, $result, $error)
+	{
+		$user_id = ArrayHelper::getValue($data, 'id', 0, 'int');
 
-    /**
-     * Saves the input data of the AIB profile plugin
-     *
-     * @param array   $data
-     * @param boolean $isNew
-     * @param boolean $result
-     * @param boolean $error
-     *
-     * @return boolean
-     * @throws Exception
-     */
-    function onUserAfterSave($data, $isNew, $result, $error)
-    {
-        $user_id = JArrayHelper::getValue($data, 'id', 0, 'int');
+		if(!empty($user_id) AND !empty($data['aibprofile']) AND $result == true)
+		{
+			try
+			{
+				$query = $this->db->getQuery(true);
+				$query->delete($this->db->quoteName('#__user_aibprofiles'));
+				$query->where(array($this->db->quoteName('user_id').' = '.(int)$user_id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
+				$this->db->setQuery($query);
+				$this->db->execute();
 
-        if(!empty($user_id) AND !empty($data['aibprofile']) AND $result == true)
-        {
-            try
-            {
-                $query = $this->db->getQuery(true);
-                $query->delete($this->db->quoteName('#__user_aibprofiles'));
-                $query->where(array($this->db->quoteName('user_id').' = '.(int)$user_id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
-                $this->db->setQuery($query);
+				$tuples = array();
+				$count = 1;
 
-                if(!$this->db->execute())
-                {
-                    throw new Exception($this->db->getErrorMsg());
-                }
+				foreach($data['aibprofile'] as $key => $value)
+				{
+					$tuples[] = $user_id.', '.$this->db->quote('aibprofile.'.$key).', '.$this->db->quote(json_encode($value)).', '.$count++;
+				}
 
-                $tuples = array();
-                $count = 1;
+				$query = $this->db->getQuery(true);
+				$query->insert($this->db->quoteName('#__user_aibprofiles'));
+				$query->columns($this->db->quoteName(array('user_id', 'profile_key', 'profile_value', 'ordering')));
+				$query->values($tuples);
+				$this->db->setQuery($query);
+				$this->db->execute();
+			}
+			catch(RuntimeException $e)
+			{
+				$this->_subject->setError($e->getMessage());
 
-                foreach($data['aibprofile'] as $key => $value)
-                {
-                    $tuples[] = $user_id.', '.$this->db->quote('aibprofile.'.$key).', '.$this->db->quote(json_encode($value)).', '.$count++;
-                }
+				return false;
+			}
+		}
 
-                $query = $this->db->getQuery(true);
-                $query->insert($this->db->quoteName('#__user_aibprofiles'));
-                $query->columns($this->db->quoteName(array('user_id', 'profile_key', 'profile_value', 'ordering')));
-                $query->values($tuples);
-                $this->db->setQuery($query);
+		return true;
+	}
 
-                if(!$this->db->execute())
-                {
-                    throw new Exception($this->db->getErrorMsg());
-                }
-            }
-            catch(JException $e)
-            {
-                $this->_subject->setError($e->getMessage());
+	/**
+	 * Removes all user profile information for the given user ID
+	 *
+	 * @param array   $user
+	 * @param boolean $success
+	 * @param string  $msg
+	 *
+	 * @return boolean
+	 * @throws Exception
+	 */
+	function onUserAfterDelete($user, $success, $msg)
+	{
+		if(empty($success))
+		{
+			return false;
+		}
 
-                return false;
-            }
-        }
+		$user_id = ArrayHelper::getValue($user, 'id', 0, 'int');
 
-        return true;
-    }
+		if(!empty($user_id))
+		{
+			try
+			{
+				$query = $this->db->getQuery(true);
+				$query->delete($this->db->quoteName('#__user_aibprofiles'));
+				$query->where(array($this->db->quoteName('user_id').' = '.(int)$user_id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
+				$this->db->setQuery($query);
+				$this->db->execute();
+			}
+			catch(RuntimeException $e)
+			{
+				$this->_subject->setError($e->getMessage());
 
-    /**
-     * Removes all user profile information for the given user ID
-     *
-     * @param array   $user
-     * @param boolean $success
-     * @param string  $msg
-     *
-     * @return boolean
-     * @throws Exception
-     */
-    function onUserAfterDelete($user, $success, $msg)
-    {
-        if(empty($success))
-        {
-            return false;
-        }
+				return false;
+			}
+		}
 
-        $user_id = JArrayHelper::getValue($user, 'id', 0, 'int');
-
-        if(!empty($user_id))
-        {
-            try
-            {
-                $query = $this->db->getQuery(true);
-                $query->delete($this->db->quoteName('#__user_aibprofiles'));
-                $query->where(array($this->db->quoteName('user_id').' = '.(int)$user_id, $this->db->quoteName('profile_key').' LIKE '.$this->db->quote('aibprofile.%')));
-                $this->db->setQuery($query);
-
-                if(!$this->db->execute())
-                {
-                    throw new Exception($this->db->getErrorMsg());
-                }
-            }
-            catch(JException $e)
-            {
-                $this->_subject->setError($e->getMessage());
-
-                return false;
-            }
-        }
-
-        return true;
-    }
+		return true;
+	}
 }

@@ -34,18 +34,18 @@ class JFormFieldDatasets extends JFormField {
 	 * @since	1.6
 	 */
 	protected function getInput() {
-		$db = JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$dataSets = array ();
-		
-		// get a list of the menu items
-		$query = "SELECT ds.id AS value, ds.name AS text" .
-				 "\n FROM #__jmap_datasets AS ds" .
-				 "\n WHERE ds.published = 1" .
-				 "\n ORDER BY ds.name";
-		$db->setQuery ( $query );
+		
+		// get a list of the menu items
+		$query = "SELECT dset.id AS value, dset.name AS text" .
+				 "\n FROM #__jmap_datasets AS dset" .
+				 "\n WHERE dset.published = 1" .
+				 "\n ORDER BY dset.name";
+		$db->setQuery ( $query );
 		$dataSets = $db->loadObjectList ();
 		
-		array_unshift($dataSets, JHtml::_('select.option', null, JText::_('COM_JMAP_NODATASET_FILTER')));
+		array_unshift($dataSets, JHtml::_('select.option', null, JText::_('COM_JMAP_NODATASET_FILTER')));
 		
 		return JHtml::_('select.genericlist', $dataSets, $this->name, 'size="20" style="width: 250px"', 'value', 'text', $this->value);
 	} 

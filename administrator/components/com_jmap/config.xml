@@ -116,6 +116,10 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="treeview_scripts" class="btn-group" type="radio" default="1" label="COM_JMAP_ENABLE_TREEVIEW_SCRIPTS" description="COM_JMAP_ENABLE_TREEVIEW_SCRIPTS_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 
 		<field type="spacer" class="label label-info spacer" label="COM_JMAP_RENDERING"/>
 	 	<field name="show_expanded" class="btn-group" type="radio" default="0" label="COM_JMAP_SHOW_EXPANDED" description="COM_JMAP_SHOW_EXPANDED_DESC">
@@ -142,6 +146,10 @@
 			<option value="1">JYES</option>
 		</field>
 		<field name="hide_empty_cats" class="btn-group" type="radio" default="0" label="COM_JMAP_HIDE_EMPTY_CATS" description="COM_JMAP_HIDE_EMPTY_CATS_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field name="expand_first_level" class="btn-group" type="radio" default="0" label="COM_JMAP_EXPAND_FIRST_LEVEL" description="COM_JMAP_EXPAND_FIRST_LEVEL_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
@@ -256,6 +264,11 @@
 		<field name="rss_webmaster_email" type="text" datavalidation="email" default="" size="50" label="COM_JMAP_RSS_WEBMASTER_EMAIL" description="COM_JMAP_RSS_WEBMASTER_EMAIL_DESC" />
 		<field name="rss_channel_excludewords" type="textarea" default="" label="COM_JMAP_RSS_CHANNEL_EXCLUDE_WORDS" description="COM_JMAP_RSS_CHANNEL_EXCLUDE_WORDS_DESC" />
 		<field name="rss_limit_valid_days" type="text" default="" datavalidation="numbers" label="COM_JMAP_RSS_LIMIT_VALID_DAYS" description="COM_JMAP_RSS_LIMIT_VALID_DAYS_DESC" />
+		<field name="rss_limit_recent" type="text" default="" datavalidation="numbers" label="COM_JMAP_RSS_LIMIT_RECENT" description="COM_JMAP_RSS_LIMIT_RECENT_DESC" />
+		<field name="rss_process_content_plugins" class="btn-group" type="radio" default="0" label="COM_JMAP_RSS_PROCESS_CONTENT_PLUGINS" description="COM_JMAP_RSS_PROCESS_CONTENT_PLUGINS_DESC">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 
 		<field type="spacer" class="label label-info spacer" label="COM_JMAP_GEO_SITEMAP"/>
 		<field name="geositemap_enabled" class="btn-group" type="radio" default="0" label="COM_JMAP_GEO_SITEMAP_ENABLED" description="COM_JMAP_GEO_SITEMAP_ENABLED_DESC">
@@ -352,6 +365,17 @@
    			<option value="3">COM_JMAP_LINKSANALYZER_REMOVE_MAX_TWO_SLASH</option>
    			<option value="4">COM_JMAP_LINKSANALYZER_REMOVE_MAX_THREE_SLASH</option>
    		</field>
+   		
+   		<field type="spacer" class="label label-info spacer" label="COM_JMAP_SEOSPIDER"/>
+   		<field name="seospider_crawler_delay" type="list" default="0" label="COM_JMAP_SEOSPIDER_CRAWLER_DELAY" description="COM_JMAP_SEOSPIDER_CRAWLER_DELAY_DESC">
+			<option value="0">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_ZERO</option>
+			<option value="100">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_100MS</option>
+			<option value="200">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_200MS</option>
+			<option value="500">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_500MS</option>
+			<option value="800">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_800MS</option>
+			<option value="1000">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_1S</option>
+			<option value="2000">COM_JMAP_SEOSPIDER_CRAWLER_DELAY_2S</option>
+		</field>
    		
 		<field type="spacer" class="label label-info spacer" label="COM_JMAP_ADVANCED"/>
 		<field name="default_autoping" class="btn-group" type="radio" default="0" label="COM_JMAP_ENABLE_DEFAULT_AUTOPING" description="COM_JMAP_ENABLE_DEFAULT_AUTOPING_DESC">

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.0" type="package" method="upgrade">
     <name>PKG_AUTHORINFOBOX</name>
-    <version>3.1.0</version>
-    <creationDate>2015-07-30</creationDate>
+    <version>3.1.2</version>
+    <creationDate>2016-02-13</creationDate>
     <license>http://www.gnu.org/licenses/gpl</license>
-    <copyright>Copyright 2015 Viktor Vogel. All rights reserved.</copyright>
+    <copyright>Copyright 2016 Viktor Vogel. All rights reserved.</copyright>
     <author>Viktor Vogel</author>
     <authorEmail>admin@kubik-rubik.de</authorEmail>
     <authorUrl>https://joomla-extensions.kubik-rubik.de/</authorUrl>
