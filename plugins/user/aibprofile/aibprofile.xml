@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.0" group="user" method="upgrade">
+    <name>PLG_USER_AIBPROFILE</name>
+    <version>3.1.0</version>
+    <creationDate>2015-07-30</creationDate>
+    <license>http://www.gnu.org/licenses/gpl</license>
+    <copyright>Copyright 2015 Viktor Vogel. All rights reserved.</copyright>
+    <author>Viktor Vogel</author>
+    <authorEmail>admin@kubik-rubik.de</authorEmail>
+    <authorUrl>http://joomla-extensions.kubik-rubik.de/</authorUrl>
+    <description>PLG_USER_AIBPROFILE_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="aibprofile">aibprofile.php</filename>
+        <filename plugin="aibprofile">index.html</filename>
+        <folder plugin="aibprofile">profiles</folder>
+        <folder plugin="aibprofile">fields</folder>
+        <folder plugin="aibprofile">sql</folder>
+    </files>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_user_aibprofile.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_user_aibprofile.sys.ini</language>
+        <language tag="de-DE">language/de-DE/de-DE.plg_user_aibprofile.ini</language>
+        <language tag="de-DE">language/de-DE/de-DE.plg_user_aibprofile.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params" addfieldpath="/plugins/user/aibprofile/fields">
+            <fieldset name="settings">
+                <field type="krdonationcodecheck" />
+                <field type="krtitle" name="nosettings" label="PLG_USER_AIBPROFILE_NOSETTINGS" />
+            </fieldset>
+            <fieldset name="donation">
+                <field type="krdonationcodecheck" name="donation" />
+                <field name="donation_code" type="text" default="" size="40" label="KR_DONATION_CODE" description="KR_DONATION_CODEDESC" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

@@ -1,0 +1,134 @@
+/**
+ * @Copyright
+ * @package     AIB - Author Info Box
+ * @author      Viktor Vogel <admin@kubik-rubik.de>
+ * @version     3.1.1 - 2016-01-25
+ * @link        https://joomla-extensions.kubik-rubik.de/aib-author-info-box
+*/
+
+#author_infobox {
+    background-color: #EFEFEF;
+    color: #000000;
+    border: 1px solid grey;
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px;
+    padding: 10px;
+    overflow: hidden;
+    clear: both;
+}
+
+#author_infobox .author_infobox_title {
+    font-size: 120%;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#author_infobox .author_infobox_image {
+    float: left;
+    margin: 5px 10px 5px 5px;
+}
+
+#author_infobox .author_infobox_image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#author_infobox .author_infobox_image_jomsocial {
+    float: left;
+    margin: 5px 10px 5px 5px;
+}
+
+#author_infobox .author_infobox_image_jomsocial img {
+    width: 64px;
+    height: 64px;
+}
+
+#author_infobox .author_infobox_image_kunena {
+    float: left;
+    margin: 5px 10px 5px 5px;
+}
+
+#author_infobox .author_infobox_image_kunena img {
+    width: 72px;
+    height: 48px;
+}
+
+#author_infobox .author_infobox_image_authorlist {
+    float: left;
+    margin: 5px 10px 5px 5px;
+}
+
+#author_infobox .author_infobox_image_authorlist img {
+    width: 100px;
+}
+
+#author_infobox .author_infobox_image_profile {
+    float: left;
+    margin: 5px 10px 5px 5px;
+}
+
+#author_infobox .author_infobox_image_profile img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#author_infobox .author_infobox_name {
+    margin-bottom: 8px;
+}
+
+#author_infobox .author_infobox_position {
+    margin-bottom: 8px;
+    font-style: italic;
+}
+
+#author_infobox .author_infobox_socialmedia {
+    margin-bottom: 8px;
+}
+
+#author_infobox .author_infobox_socialmedia span {
+    margin-right: 5px;
+}
+
+#author_infobox .author_infobox_socialmedia img {
+    border-radius: 12px;
+}
+
+#author_infobox .author_infobox_socialmedia a {
+    display: inline-block;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -webkit-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+}
+
+#author_infobox .author_infobox_socialmedia a:hover {
+    background: transparent;
+    opacity: 1;
+}
+
+#author_infobox .author_infobox_aboutme, #author_infobox .author_infobox_articles {
+    font-size: 110%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#author_infobox .author_infobox_description {
+    width: 100%;
+}
+
+#author_infobox .author_infobox_articles_links {
+    font-weight: bold;
+}
+
+#author_infobox .author_infobox_articles_hits, #author_infobox .author_infobox_articles_date {
+    font-size: 90%;
+}
+
+#author_infobox span.bold {
+    font-weight: bold;
+}
+
+#author_infobox span.marginleft {
+    margin-left: 10px;
+}
